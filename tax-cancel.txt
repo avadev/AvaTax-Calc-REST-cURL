@@ -1,0 +1,19 @@
+curl -u <AccountNumber>:<LicenseKey> 
+-H "Content-Type: text/xml"
+-d <CancelTaxRequest>
+<DocType>SalesInvoice</DocType>
+<DocCode>TEST123123</DocCode>
+<CompanyCode>APITrialCompany</CompanyCode>
+<CancelCode>DocDeleted</CancelCode>
+</CancelTaxRequest>
+"https://development.avalara.net/1.0/tax/cancel"
+
+Where <AccountNumber> is your AvaTax account number, and <LicenseKey> is your AvaTax account license key.
+
+Expected response:
+<CancelTaxResponse>
+<CancelTaxResult><DocId>31075631</DocId>
+<TransactionId>352470715</TransactionId>
+<ResultCode>Success</ResultCode>
+</CancelTaxResult>
+</CancelTaxResponse>
