@@ -23,8 +23,7 @@ curl -u <AccountNumber>:<LicenseKey>
 <Amount>10</Amount>
 </Line>
 </Lines>
-</GetTaxRequest>"
-"https://development.avalara.net/1.0/tax/get"
+</GetTaxRequest>" "https://development.avalara.net/1.0/tax/get"
 
 Where <AccountNumber> is your AvaTax account number, and <LicenseKey> is your AvaTax account license key.
 
