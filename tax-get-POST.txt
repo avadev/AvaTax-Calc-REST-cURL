@@ -1,6 +1,6 @@
 curl -u <AccountNumber>:<LicenseKey> 
 -H "Content-Type: text/xml"
--d <GetTaxRequest>
+-d "<GetTaxRequest>
 <DocDate>2011-05-11</DocDate>
 <CustomerCode>CUST1</CustomerCode>
 <DocType>SalesInvoice</DocType>
@@ -23,7 +23,7 @@ curl -u <AccountNumber>:<LicenseKey>
 <Amount>10</Amount>
 </Line>
 </Lines>
-</GetTaxRequest>
+</GetTaxRequest>"
 "https://development.avalara.net/1.0/tax/get"
 
 Where <AccountNumber> is your AvaTax account number, and <LicenseKey> is your AvaTax account license key.
