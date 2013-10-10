@@ -1,85 +1,145 @@
-curl -u <AccountNumber>:<LicenseKey> 
--H "Content-Type: text/xml"
--d <GetTaxRequest>
-<DocDate>2011-05-11</DocDate>
-<CustomerCode>CUST1</CustomerCode>
-<DocType>SalesInvoice</DocType>
-<CompanyCode>APITrialCompany</CompanyCode>
-<DocCode>TEST123123</DocCode>
-<Addresses>
-<Address>
-<AddressCode>1</AddressCode>
-<Line1>435 Ericksen Avenue Northeast</Line1>
-<Line2>#250</Line2>
-<PostalCode>98110</PostalCode>
-</Address>
-</Addresses>
-<Lines>
-<Line>
-<LineNo>1</LineNo>
-<DestinationCode>1</DestinationCode>
-<OriginCode>1</OriginCode>
-<Qty>1</Qty>
-<Amount>10</Amount>
-</Line>
-</Lines>
-</GetTaxRequest>
-"https://development.avalara.net/1.0/tax/get"
+curl -u <AccountNumber>:<LicenseKey> -H "Content-Type: text/json" -d "{
+"DocDate": "2013-06-01",
+"CustomerCode": "uniqueCustomerId",
+"CompanyCode": "SDK",
+"DocType": "SalesInvoice",
+"Commit": false,
+"Client": "Cool ERP,3,5",
+"DocCode": "someInvoiceNumber",
+"DetailLevel": "Tax",
+"CustomerUsageType": "G",
+"ExemptionNo": "12334",
+"Discount": 0,
+"PurchaseOrderNo":"PO 23423",					
+"ReferenceCode":"",							
+"PosLaneCode":"",									
+"BusinessIdentificationNo":"",
+"TaxOverride":
+{
+"Reason":"Item Returned",
+"TaxDate":"2013-05-05",
+"TaxOverrideType":"TaxDate"
+},
+"Addresses":
+[
+{
+"AddressCode": "Origin",
+"Line1": "118 N Clark St",
+"City": "Chicago",
+"Region": "IL",
+"PostalCode": "60602-1304",
+"Country": "US"
+},
+{
+"AddressCode": "Dest",
+"Line1": "1060 W. Addison St",
+"City": "Chicago",
+"Region": "IL",
+"PostalCode": "60613-4566",
+"Country": "US"
+}
+],
+"Lines":
+[
+{
+"LineNo": "00001",
+"DestinationCode": "Dest",
+"OriginCode": "Origin",
+"ItemCode": "SP-001",
+"Description": "Running Shoe",
+"TaxCode": "PC030147",
+"Qty": 1,
+"Amount": 100
+}
+]
+}" "https://development.avalara.net/1.0/tax/get"
 
 Where <AccountNumber> is your AvaTax account number, and <LicenseKey> is your AvaTax account license key.
 
 Expected response:
-<GetTaxResult>
-<DocCode>c2a84c0f-b720-42b2-bcb3-1cbf347c6bbc</DocCode>
-<DocDate>2011-05-11</DocDate>
-<Timestamp>2013-03-19T06:19:06.2623295Z</Timestamp>
-<TotalAmount>10</TotalAmount>
-<TotalDiscount>0</TotalDiscount>
-<TotalExemption>0</TotalExemption>
-<TotalTaxable>10</TotalTaxable>
-<TotalTax>0.86</TotalTax>
-<TotalTaxCalculated>0.86</TotalTaxCalculated>
-<TaxDate>2011-05-11</TaxDate>
-<TaxLines><TaxLine><LineNo>1</LineNo>
-<TaxCode>P0000000</TaxCode>
-<Taxability>true</Taxability>
-<BoundaryLevel>Address</BoundaryLevel>
-<Exemption>0</Exemption>
-<Discount>0</Discount>
-<Taxable>10</Taxable>
-<Rate>0.086000</Rate>
-<Tax>0.86</Tax>
-<TaxCalculated>0.86</TaxCalculated>
-<TaxDetails><TaxDetail><Country>US</Country>
-<Region>WA</Region>
-<JurisType>State</JurisType>
-<Taxable>10</Taxable>
-<Rate>0.065000</Rate>
-<Tax>0.65</Tax>
-<JurisName>WASHINGTON</JurisName>
-<TaxName>WA STATE TAX</TaxName>
-</TaxDetail>
-<TaxDetail><Country>US</Country>
-<Region>WA</Region>
-<JurisType>City</JurisType>
-<Taxable>10</Taxable>
-<Rate>0.021000</Rate>
-<Tax>0.21</Tax>
-<JurisName>BAINBRIDGE ISLAND</JurisName>
-<TaxName>WA CITY TAX</TaxName>
-</TaxDetail>
-</TaxDetails>
-</TaxLine>
-</TaxLines>
-<TaxAddresses><TaxAddress><Address>435 Ericksen Ave NE</Address>
-<AddressCode>1</AddressCode>
-<City>Bainbridge Island</City>
-<Country>US</Country>
-<PostalCode>98110-1896</PostalCode>
-<Region>WA</Region>
-<TaxRegionId>1048695</TaxRegionId>
-<JurisCode>5300003736</JurisCode>
-</TaxAddress>
-</TaxAddresses>
-<ResultCode>Success</ResultCode>
-</GetTaxResult>
+{
+"ResultCode": "Success",
+"DocCode": "someInvoiceNumber",
+"DocDate": "2013-06-01",
+"Timestamp": "2013-10-10T02:24:51.0304498Z",
+"TotalAmount": "100",
+"TotalDiscount": "0",
+"TotalExemption": "100",
+"TotalTaxable": "0",
+"TotalTax": "0",
+"TotalTaxCalculated": "0",
+"TaxLines": [
+{
+"LineNo": "00001",
+"TaxCode": "PC030147",
+"Taxability": "true",
+"BoundaryLevel": "Address",
+"Exemption": "100",
+"Discount": "0",
+"Taxable": "0",
+"Rate": "0.092500",
+"Tax": "0",
+"TaxCalculated": "0",
+"TaxDetails": [
+{
+"Country": "US",
+"Region": "IL",
+"JurisType": "State",
+"Taxable": "0",
+"Rate": "0.062500",
+"Tax": "0",
+"JurisName": "ILLINOIS",
+"TaxName": "IL STATE TAX"}
+,{
+"Country": "US",
+"Region": "IL",
+"JurisType": "County",
+"Taxable": "0",
+"Rate": "0.007500",
+"Tax": "0",
+"JurisName": "COOK",
+"TaxName": "IL COUNTY TAX"}
+,{
+"Country": "US",
+"Region": "IL",
+"JurisType": "City",
+"Taxable": "0",
+"Rate": "0.012500",
+"Tax": "0",
+"JurisName": "CHICAGO",
+"TaxName": "IL CITY TAX"}
+,{
+"Country": "US",
+"Region": "IL",
+"JurisType": "Special",
+"Taxable": "0",
+"Rate": "0.010000",
+"Tax": "0",
+"JurisName": "REGIONAL TRANSPORT. AUTHORITY (RTA)",
+"TaxName": "IL SPECIAL TAX"}
+]
+}
+]
+,
+"TaxAddresses": [
+{
+"AddressCode": "Dest",
+"Country": "US",
+"Region": "IL",
+"TaxRegionId": "2062953",
+"JurisCode": "1703114000",
+"Address": "1060 W ADDISON ST",
+"City": "CHICAGO",
+"PostalCode": "60613-4566"}
+,{
+"AddressCode": "Origin",
+"Country": "US",
+"Region": "IL",
+"TaxRegionId": "2062953",
+"JurisCode": "1703114000",
+"Address": "118 N CLARK ST",
+"City": "CHICAGO",
+"PostalCode": "60602-1304"}
+]
+,
+"TaxDate": "2013-05-05"}
