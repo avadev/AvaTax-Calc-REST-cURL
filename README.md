@@ -7,13 +7,13 @@ You will need an AvaTax account to run these samples - you can sign up for a fre
 
 These samples cover the following REST resources:
 
-address/validate (http://developer.avalara.com/api-docs/rest/resources/address-validation)
+address/validate (http://developer.avalara.com/api-docs/rest/address-validation)
 
-tax/get GET (http://developer.avalara.com/api-docs/rest/resources/tax/get/ver-get)
+tax/get GET (http://developer.avalara.com/api-docs/rest/tax/get)
 
-tax/get POST (http://developer.avalara.com/api-docs/rest/resources/tax/get/ver-post)
+tax/get POST (http://developer.avalara.com/api-docs/rest/tax/post)
 
-tax/cancel (http://developer.avalara.com/api-docs/rest/resources/tax/cancel)
+tax/cancel (http://developer.avalara.com/api-docs/rest/tax/cancel)
 
 
 For more information on calculating tax with AvaTax and recommended use cases, please see our developer documentation at http://developer.avalara.com/
