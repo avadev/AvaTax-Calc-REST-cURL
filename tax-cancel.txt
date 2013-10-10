@@ -1,9 +1,9 @@
-curl --user <AccountNumber>:<LicenseKey> --header "Content-Type: text/json" --data "
+curl --user <AccountNumber>:<LicenseKey> --header "Content-Type: text/json" --data '
 {   "CompanyCode":"yourCompanyCode",
    "DocType":"SalesInvoice",
    "DocCode":"someInvoiceNumber",
    "CancelCode":"DocVoided"
-   }" https://development.avalara.net/1.0/tax/cancel
+   }' https://development.avalara.net/1.0/tax/cancel
    
    
 Where <AccountNumber> is your AvaTax account number, and <LicenseKey> is your AvaTax account license key.

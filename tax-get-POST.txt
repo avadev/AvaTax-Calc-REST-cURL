@@ -1,4 +1,4 @@
-curl -u <AccountNumber>:<LicenseKey> -H "Content-Type: text/json" -d "{
+curl -u <AccountNumber>:<LicenseKey> -H "Content-Type: text/json" -d '{
 "DocDate": "2013-06-01",
 "CustomerCode": "uniqueCustomerId",
 "CompanyCode": "SDK",
@@ -52,7 +52,7 @@ curl -u <AccountNumber>:<LicenseKey> -H "Content-Type: text/json" -d "{
 "Amount": 100
 }
 ]
-}" "https://development.avalara.net/1.0/tax/get"
+}' "https://development.avalara.net/1.0/tax/get"
 
 Where <AccountNumber> is your AvaTax account number, and <LicenseKey> is your AvaTax account license key.
 
