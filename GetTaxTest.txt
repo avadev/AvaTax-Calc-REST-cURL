@@ -1,0 +1,145 @@
+curl -u <AccountNumber>:<LicenseKey> -H "Content-Type: text/json" -d '{
+"DocDate": "2013-06-01",
+"CustomerCode": "uniqueCustomerId",
+"CompanyCode": "SDK",
+"DocType": "SalesInvoice",
+"Commit": false,
+"Client": "Cool ERP,3,5",
+"DocCode": "someInvoiceNumber",
+"DetailLevel": "Tax",
+"CustomerUsageType": "G",
+"ExemptionNo": "12334",
+"Discount": 0,
+"PurchaseOrderNo":"PO 23423",					
+"ReferenceCode":"",							
+"PosLaneCode":"",									
+"BusinessIdentificationNo":"",
+"TaxOverride":
+{
+"Reason":"Item Returned",
+"TaxDate":"2013-05-05",
+"TaxOverrideType":"TaxDate"
+},
+"Addresses":
+[
+{
+"AddressCode": "Origin",
+"Line1": "118 N Clark St",
+"City": "Chicago",
+"Region": "IL",
+"PostalCode": "60602-1304",
+"Country": "US"
+},
+{
+"AddressCode": "Dest",
+"Line1": "1060 W. Addison St",
+"City": "Chicago",
+"Region": "IL",
+"PostalCode": "60613-4566",
+"Country": "US"
+}
+],
+"Lines":
+[
+{
+"LineNo": "00001",
+"DestinationCode": "Dest",
+"OriginCode": "Origin",
+"ItemCode": "SP-001",
+"Description": "Running Shoe",
+"TaxCode": "PC030147",
+"Qty": 1,
+"Amount": 100
+}
+]
+}' "https://development.avalara.net/1.0/tax/get"
+
+Where <AccountNumber> is your AvaTax account number, and <LicenseKey> is your AvaTax account license key.
+
+Expected response:
+{
+"ResultCode": "Success",
+"DocCode": "someInvoiceNumber",
+"DocDate": "2013-06-01",
+"Timestamp": "2013-10-10T02:24:51.0304498Z",
+"TotalAmount": "100",
+"TotalDiscount": "0",
+"TotalExemption": "100",
+"TotalTaxable": "0",
+"TotalTax": "0",
+"TotalTaxCalculated": "0",
+"TaxLines": [
+{
+"LineNo": "00001",
+"TaxCode": "PC030147",
+"Taxability": "true",
+"BoundaryLevel": "Address",
+"Exemption": "100",
+"Discount": "0",
+"Taxable": "0",
+"Rate": "0.092500",
+"Tax": "0",
+"TaxCalculated": "0",
+"TaxDetails": [
+{
+"Country": "US",
+"Region": "IL",
+"JurisType": "State",
+"Taxable": "0",
+"Rate": "0.062500",
+"Tax": "0",
+"JurisName": "ILLINOIS",
+"TaxName": "IL STATE TAX"}
+,{
+"Country": "US",
+"Region": "IL",
+"JurisType": "County",
+"Taxable": "0",
+"Rate": "0.007500",
+"Tax": "0",
+"JurisName": "COOK",
+"TaxName": "IL COUNTY TAX"}
+,{
+"Country": "US",
+"Region": "IL",
+"JurisType": "City",
+"Taxable": "0",
+"Rate": "0.012500",
+"Tax": "0",
+"JurisName": "CHICAGO",
+"TaxName": "IL CITY TAX"}
+,{
+"Country": "US",
+"Region": "IL",
+"JurisType": "Special",
+"Taxable": "0",
+"Rate": "0.010000",
+"Tax": "0",
+"JurisName": "REGIONAL TRANSPORT. AUTHORITY (RTA)",
+"TaxName": "IL SPECIAL TAX"}
+]
+}
+]
+,
+"TaxAddresses": [
+{
+"AddressCode": "Dest",
+"Country": "US",
+"Region": "IL",
+"TaxRegionId": "2062953",
+"JurisCode": "1703114000",
+"Address": "1060 W ADDISON ST",
+"City": "CHICAGO",
+"PostalCode": "60613-4566"}
+,{
+"AddressCode": "Origin",
+"Country": "US",
+"Region": "IL",
+"TaxRegionId": "2062953",
+"JurisCode": "1703114000",
+"Address": "118 N CLARK ST",
+"City": "CHICAGO",
+"PostalCode": "60602-1304"}
+]
+,
+"TaxDate": "2013-05-05"}
