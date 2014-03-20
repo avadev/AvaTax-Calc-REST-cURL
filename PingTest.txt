@@ -1,0 +1,31 @@
+There is no explicit Ping call in the REST API, but an equivalent functionality can be achieved by calling EstimateTax with known good parameters.
+
+curl --user 1234567890:A1B2C3D4E5F6G7H8 "https://development.avalara.net/1.0/tax/47.627935,-122.51702/get?saleamount=10"
+
+Expected response:
+{
+"Rate": 0.086,
+"Tax": 0.86,
+"TaxDetails":
+[
+{
+"Rate": 0.065,
+"Tax": 0.65,
+"Region": "WA",
+"Country": "US",
+"JurisType": "State",
+"JurisName": "WASHINGTON",
+"TaxName": "WA STATE TAX"
+},
+{
+"Rate": 0.021,
+"Tax": 0.21,
+"Region": "WA",
+"Country": "US",
+"JurisType": "City",
+"JurisName": "BAINBRIDGE ISLAND",
+"TaxName": "WA CITY TAX"
+}
+]
+, "ResultCode": "Success"
+}

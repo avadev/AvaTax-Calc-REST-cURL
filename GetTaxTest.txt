@@ -1,81 +1,111 @@
-curl -u <AccountNumber>:<LicenseKey> -H "Content-Type: text/json" -d '{
-"DocDate": "2013-06-01",
-"CustomerCode": "uniqueCustomerId",
-"CompanyCode": "SDK",
-"DocType": "SalesInvoice",
-"Commit": false,
-"Client": "Cool ERP,3,5",
-"DocCode": "someInvoiceNumber",
+curl --user 1234567890:A1B2C3D4E5F6G7H8 -H "Content-Type: text/json" -d '{
+"CustomerCode": "ABC4335",
+"DocDate": "2014-01-01",
+"CompanyCode": "APITrialCompany",
+"Client": "AvaTaxSample",
+"DocCode": "INV001",
 "DetailLevel": "Tax",
+"Commit": "false",
+"DocType": "SalesInvoice",
 "CustomerUsageType": "G",
-"ExemptionNo": "12334",
-"Discount": 0,
-"PurchaseOrderNo":"PO 23423",					
-"ReferenceCode":"",							
-"PosLaneCode":"",									
-"BusinessIdentificationNo":"",
-"TaxOverride":
+"ExemptionNo": "12345",
+"Discount": "50",
+"TaxOverride": {
+	"TaxOverrideType": "TaxDate",
+	"Reason": "Adjustment for return",
+	"TaxDate": "2013-07-01",
+	"TaxAmount": "0",
+	},
+"PurchaseOrderNo": "PO123456",
+"ReferenceCode": "ref123456",
+"PosLaneCode": "09",
+"CurrencyCode": "USD",
+"Addresses": [
 {
-"Reason":"Item Returned",
-"TaxDate":"2013-05-05",
-"TaxOverrideType":"TaxDate"
-},
-"Addresses":
-[
+	"AddressCode": "01",
+	"Line1": "45 Fremont Street",
+	"City": "San Francisco",
+	"Region": "CA"	},
+
 {
-"AddressCode": "Origin",
-"Line1": "118 N Clark St",
-"City": "Chicago",
-"Region": "IL",
-"PostalCode": "60602-1304",
-"Country": "US"
-},
+	"AddressCode": "02",
+	"Line1": "118 N Clark St",
+	"Line2": "Suite 100",
+	"Line3": "ATTN Accounts Payable",
+	"City": "Chicago",
+	"Region": "IL",
+	"Country": "US",
+	"PostalCode": "60602"	},
+
 {
-"AddressCode": "Dest",
-"Line1": "1060 W. Addison St",
-"City": "Chicago",
-"Region": "IL",
-"PostalCode": "60613-4566",
-"Country": "US"
-}
+	"AddressCode": "03",
+	"Latitude": "47.627935",
+	"Longitude": "-122.51702"	}
+
 ],
-"Lines":
-[
+"Lines": [
 {
-"LineNo": "00001",
-"DestinationCode": "Dest",
-"OriginCode": "Origin",
-"ItemCode": "SP-001",
-"Description": "Running Shoe",
-"TaxCode": "PC030147",
-"Qty": 1,
-"Amount": 100
-}
+	"LineNo": "01",
+	"ItemCode": "N543",
+	"Qty": "1",
+	"Amount": "10",
+	"OriginCode": "01",
+	"DestinationCode": "02",
+	"Description": "Red Size 7 Widget",
+	"TaxCode": "NT",
+	"CustomerUsageType": "L",
+	"Discounted": "true",
+	"TaxIncluded": "true",
+	"TaxOverride":
+	{
+		"TaxOverrideType": "TaxDate",
+		"Reason": "Adjustment for return",
+		"TaxDate": "2013-07-01",
+		"TaxAmount": "0"		},
+	"Ref1": "ref123",
+	"Ref2": "ref456"	},
+{
+	"LineNo": "02",
+	"ItemCode": "T345",
+	"Qty": "3",
+	"Amount": "150",
+	"OriginCode": "01",
+	"DestinationCode": "03",
+	"Description": " Size 10 Green Running Shoe",
+	"TaxCode": "PC030147"	},
+{
+	"LineNo": "02-FR",
+	"ItemCode": "FREIGHT",
+	"Qty": "1",
+	"Amount": "15",
+	"OriginCode": "01",
+	"DestinationCode": "03",
+	"Description": "Shipping Charge",
+	"TaxCode": "FR"	}
+
 ]
 }' "https://development.avalara.net/1.0/tax/get"
-
-Where <AccountNumber> is your AvaTax account number, and <LicenseKey> is your AvaTax account license key.
 
 Expected response:
 {
 "ResultCode": "Success",
-"DocCode": "someInvoiceNumber",
-"DocDate": "2013-06-01",
-"Timestamp": "2013-10-10T02:24:51.0304498Z",
-"TotalAmount": "100",
-"TotalDiscount": "0",
-"TotalExemption": "100",
+"DocCode": "INV001",
+"DocDate": "2014-01-01",
+"Timestamp": "2014-03-20T00:19:55.887",
+"TotalAmount": "175",
+"TotalDiscount": "10",
+"TotalExemption": "165",
 "TotalTaxable": "0",
 "TotalTax": "0",
 "TotalTaxCalculated": "0",
 "TaxLines": [
 {
-"LineNo": "00001",
-"TaxCode": "PC030147",
-"Taxability": "true",
+"LineNo": "01",
+"TaxCode": "NT",
+"Taxability": "false",
 "BoundaryLevel": "Address",
-"Exemption": "100",
-"Discount": "0",
+"Exemption": "0",
+"Discount": "10",
 "Taxable": "0",
 "Rate": "0.092500",
 "Tax": "0",
@@ -119,27 +149,130 @@ Expected response:
 "TaxName": "IL SPECIAL TAX"}
 ]
 }
+,{
+"LineNo": "02",
+"TaxCode": "PC030147",
+"Taxability": "true",
+"BoundaryLevel": "Zip5",
+"Exemption": "150",
+"Discount": "0",
+"Taxable": "0",
+"Rate": "0.086000",
+"Tax": "0",
+"TaxCalculated": "0",
+"TaxDetails": [
+{
+"Country": "US",
+"Region": "WA",
+"JurisType": "State",
+"Taxable": "0",
+"Rate": "0.065000",
+"Tax": "0",
+"JurisName": "WASHINGTON",
+"TaxName": "WA STATE TAX"}
+,{
+"Country": "US",
+"Region": "WA",
+"JurisType": "City",
+"Taxable": "0",
+"Rate": "0.021000",
+"Tax": "0",
+"JurisName": "BAINBRIDGE ISLAND",
+"TaxName": "WA CITY TAX"}
+]
+}
+,{
+"LineNo": "02-FR",
+"TaxCode": "FR",
+"Taxability": "true",
+"BoundaryLevel": "Zip5",
+"Exemption": "15",
+"Discount": "0",
+"Taxable": "0",
+"Rate": "0.086000",
+"Tax": "0",
+"TaxCalculated": "0",
+"TaxDetails": [
+{
+"Country": "US",
+"Region": "WA",
+"JurisType": "State",
+"Taxable": "0",
+"Rate": "0.065000",
+"Tax": "0",
+"JurisName": "WASHINGTON",
+"TaxName": "WA STATE TAX"}
+,{
+"Country": "US",
+"Region": "WA",
+"JurisType": "City",
+"Taxable": "0",
+"Rate": "0.021000",
+"Tax": "0",
+"JurisName": "BAINBRIDGE ISLAND",
+"TaxName": "WA CITY TAX"}
+]
+}
 ]
 ,
 "TaxAddresses": [
 {
-"AddressCode": "Dest",
+"Address": "45 Fremont St",
+"AddressCode": "01",
+"City": "San Francisco",
 "Country": "US",
-"Region": "IL",
-"TaxRegionId": "2062953",
-"JurisCode": "1703114000",
-"Address": "1060 W ADDISON ST",
-"City": "CHICAGO",
-"PostalCode": "60613-4566"}
+"PostalCode": "94105-2204",
+"Region": "CA",
+"TaxRegionId": "2113460",
+"Latitude": "37.791119",
+"Longitude": "-122.397366"}
 ,{
-"AddressCode": "Origin",
+"Address": "45 Fremont St",
+"AddressCode": "01",
+"City": "San Francisco",
 "Country": "US",
+"PostalCode": "94105-2204",
+"Region": "CA",
+"TaxRegionId": "2113460",
+"Latitude": "37.791119",
+"Longitude": "-122.397366"}
+,{
+"Address": "45 Fremont St",
+"AddressCode": "01",
+"City": "San Francisco",
+"Country": "US",
+"PostalCode": "94105-2204",
+"Region": "CA",
+"TaxRegionId": "2113460",
+"JurisCode": "0607500000",
+"Latitude": "37.791119",
+"Longitude": "-122.397366"}
+,{
+"Address": "118 N Clark St Ste 100",
+"AddressCode": "02",
+"City": "Chicago",
+"Country": "US",
+"PostalCode": "60602-1304",
 "Region": "IL",
 "TaxRegionId": "2062953",
 "JurisCode": "1703114000",
-"Address": "118 N CLARK ST",
-"City": "CHICAGO",
-"PostalCode": "60602-1304"}
+"Latitude": "41.884132",
+"Longitude": "-87.631048"}
+,{
+"AddressCode": "03",
+"Country": "US",
+"Region": "WA",
+"TaxRegionId": "2109716",
+"Latitude": "47.627935",
+"Longitude": "-122.51702"}
+,{
+"AddressCode": "03",
+"Country": "US",
+"Region": "WA",
+"TaxRegionId": "2109716",
+"JurisCode": "5303503736",
+"Latitude": "47.627935",
+"Longitude": "-122.51702"}
 ]
 ,
-"TaxDate": "2013-05-05"}
+"TaxDate": "2013-07-01"}
