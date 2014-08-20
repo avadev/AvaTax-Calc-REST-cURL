@@ -56,12 +56,6 @@ curl --user 1234567890:A1B2C3D4E5F6G7H8 -H "Content-Type: text/json" -d '{
 	"CustomerUsageType": "L",
 	"Discounted": "true",
 	"TaxIncluded": "true",
-	"TaxOverride":
-	{
-		"TaxOverrideType": "TaxDate",
-		"Reason": "Adjustment for return",
-		"TaxDate": "2013-07-01",
-		"TaxAmount": "0"		},
 	"Ref1": "ref123",
 	"Ref2": "ref456"	},
 {
