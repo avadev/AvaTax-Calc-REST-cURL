@@ -1,5 +1,6 @@
 AvaTax-REST-cURL
 =====================
+[Other Samples](http://developer.avalara.com/api-docs/api-sample-code)
 
 This is a set of cURL sample requests and expected responses demonstrating the [AvaTax REST API](http://developer.avalara.com/api-docs/rest) methods:
  [tax/get POST](http://developer.avalara.com/api-docs/rest/tax/post/), [tax/get GET](http://developer.avalara.com/api-docs/rest/tax/get), [tax/cancel POST](http://developer.avalara.com/api-docs/rest/tax/cancel), and [address/validate GET](http://developer.avalara.com/api-docs/rest/address-validation).
