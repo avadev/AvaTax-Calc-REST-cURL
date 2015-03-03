@@ -8,6 +8,7 @@ curl --user 1234567890:A1B2C3D4E5F6G7H8 -H "Content-Type: text/json" -d '{
 "Commit": "false",
 "DocType": "SalesInvoice",
 "CustomerUsageType": "G",
+"BusinessIdentificationNo": "234243",
 "ExemptionNo": "12345",
 "Discount": "50",
 "TaxOverride": {
